@@ -22,7 +22,7 @@ const App = () => {
     const personObject = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1,
+      id: (persons.length + 1).toString(),
     };
 
     if (persons.some((person) => person.name === newName)) {
@@ -52,6 +52,21 @@ const App = () => {
     person.name.toLowerCase().includes(searchName.toLowerCase())
   );
 
+  const removePerson = (id) => {
+    const removedPerson = persons.find((person) => person.id === id);
+
+    const name = removedPerson.name;
+
+    let result = confirm(`Delete ${name}?`);
+
+    if (result === true) {
+      console.log(name);
+      noteService.remove(id).then(() => {
+        setPersons(persons.filter((person) => person.id !== id));
+      });
+    }
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -65,7 +80,7 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h3>Numbers</h3>
-      <Persons filteredNames={filteredNames} />
+      <Persons filteredNames={filteredNames} handleDelete={removePerson} />
     </div>
   );
 };
