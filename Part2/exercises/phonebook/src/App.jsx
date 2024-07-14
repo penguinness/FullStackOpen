@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import noteService from './services/phonebook';
+import personService from './services/phonebook';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
@@ -12,7 +12,7 @@ const App = () => {
   const [searchName, setSearchName] = useState('');
 
   useEffect(() => {
-    noteService
+    personService
       .getAll()
       .then((initialPhonebook) => setPersons(initialPhonebook));
   }, []);
@@ -26,9 +26,27 @@ const App = () => {
     };
 
     if (persons.some((person) => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
+      const result = confirm(
+        `${newName} is already added to phonebook, replace the old number with a new one`
+      );
+      if (result) {
+        const needChangePerson = persons.find(
+          (person) => person.name === newName
+        );
+        const changedPerson = { ...needChangePerson, number: newNumber };
+
+        personService
+          .update(needChangePerson.id, changedPerson)
+          .then((returnedPerson) =>
+            setPersons(
+              persons.map((person) =>
+                person.id !== needChangePerson.id ? person : returnedPerson
+              )
+            )
+          );
+      }
     } else {
-      noteService.create(personObject).then((returnedPerson) => {
+      personService.create(personObject).then((returnedPerson) => {
         setPersons(persons.concat(returnedPerson));
         setNewName('');
         setNewNumber('');
@@ -60,8 +78,7 @@ const App = () => {
     let result = confirm(`Delete ${name}?`);
 
     if (result === true) {
-      console.log(name);
-      noteService.remove(id).then(() => {
+      personService.remove(id).then(() => {
         setPersons(persons.filter((person) => person.id !== id));
       });
     }
