@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [value, setValue] = useState('');
+  const [rates, setRates] = useState({});
+  const [currency, setCurrency] = useState(null);
+
+  useEffect(() => {
+    console.log('effect run, currency is now', currency);
+
+    // skip if currency is not defined
+    if (currency) {
+      console.log('fetching exchange rates...');
+      axios
+        .get(`https://open.er-api.com/v6/latest/${currency}`)
+        .then((response) => {
+          setRates(response.data.rates);
+        });
+    }
+  }, [currency]);
+
+  const handleChange = (event) => {
+    console.log(`handleChange called with value: ${event.target.value}`);
+    setValue(event.target.value);
+  };
+
+  const onSearch = (event) => {
+    event.preventDefault();
+    setCurrency(value);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div>
+      <form onSubmit={onSearch}>
+        currency: <input value={value} onChange={handleChange} />
+        <button type='submit'>exchange rate</button>
+      </form>
+      <pre>{JSON.stringify(rates, null, 2)}</pre>
+    </div>
+  );
+};
 
-export default App
+export default App;
