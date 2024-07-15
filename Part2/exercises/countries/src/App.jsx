@@ -35,7 +35,7 @@ const App = () => {
       <form>
         find countries <input value={value} onChange={handleChange} />
       </form>
-      <Display countries={countries} />
+      <Display countries={countries} setCountries={setCountries} />
     </div>
   );
 };

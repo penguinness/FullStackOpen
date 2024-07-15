@@ -1,20 +1,24 @@
 const ShowInfo = ({ country }) => {
-  console.log(country.languages);
   const languages = Object.values(country.languages);
   return (
     <div>
       {/* display country's name */}
       <h1>{country.name.common}</h1>
       {/* display capital */}
-      <p>capital {country.capital}</p>
+      <div>capital {country.capital}</div>
       {/* display area code */}
-      <p>area {country.area}</p>
+      <div>area {country.area}</div>
+      <br />
       {/* display languages */}
-      <ul>
-        {languages.map((language) => (
-          <li key={language}>{language}</li>
-        ))}
-      </ul>
+      <div>
+        {' '}
+        <strong>languages</strong>
+        <ul>
+          {languages.map((language) => (
+            <li key={language}>{language}</li>
+          ))}
+        </ul>
+      </div>
       {/* display flag png */}
       <img src={country.flags.png} alt={country.flags.alt} />
     </div>
