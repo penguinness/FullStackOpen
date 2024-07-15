@@ -4,18 +4,29 @@ import Display from './components/Display';
 
 const App = () => {
   const [value, setValue] = useState('');
-  const [countries, setCountries] = useState(null);
+  const [countries, setCountries] = useState([]);
 
   useEffect(() => {
-    countryAPIService.getAll().then((countries) => setCountries(countries));
-  }, []);
-
-  const findCountries = () => {
-    return countries.find(country);
-  };
+    if (value) {
+      countryAPIService.getAll().then((countries) => {
+        const matchedCountries = countries.filter((country) =>
+          country.name.common.toLowerCase().includes(value.toLowerCase())
+        );
+        setCountries(matchedCountries);
+        console.log(
+          `First matched country for testing: ${JSON.stringify(
+            matchedCountries[0]
+          )}`
+        );
+        console.log(matchedCountries.length);
+      });
+    } else {
+      setCountries([]);
+    }
+  }, [value]);
 
   const handleChange = (event) => {
-    console.log(event.target.value);
+    console.log(`handleChange called with value: ${event.target.value}`);
     setValue(event.target.value);
   };
 
