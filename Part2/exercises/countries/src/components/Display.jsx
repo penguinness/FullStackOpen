@@ -1,4 +1,4 @@
-import countryAPIService from '../services/countries';
+import ShowInfo from './ShowInfo';
 
 const Display = ({ countries }) => {
   if (countries.length > 10) {
@@ -11,20 +11,9 @@ const Display = ({ countries }) => {
         ))}
       </div>
     );
+  } else if (countries.length === 1) {
+    return <ShowInfo country={countries[0]} />;
   }
-  //   else {
-  //     const country = countries.name.common;
-  //     // countryAPIService.getCountry(country)
-  //     return (
-  //       <div>
-  //         {/* display country's name (heading 1) */}
-  //         {/* display capital */}
-  //         {/* display area code */}
-  //         {/* display languages */}
-  //         {/* display flag png */}
-  //       </div>
-  //     );
-  //   }
 };
 
 export default Display;
