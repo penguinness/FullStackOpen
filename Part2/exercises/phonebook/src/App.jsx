@@ -6,10 +6,11 @@ import Persons from './components/Persons';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
-
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [searchName, setSearchName] = useState('');
+  const [message, setMessage] = useState(null);
+  const [messageType, setMessageType] = useState(null);
 
   useEffect(() => {
     personService
@@ -43,13 +44,25 @@ const App = () => {
                 person.id !== needChangePerson.id ? person : returnedPerson
               )
             )
-          );
+          )
+          .catch((error) => {
+            setMessage(
+              `Information of ${needChangePerson.name} has already been removed from server`
+            );
+            setMessageType(`error`);
+            setPersons(
+              persons.filter((person) => person.id !== needChangePerson.id)
+            );
+          });
       }
     } else {
       personService.create(personObject).then((returnedPerson) => {
         setPersons(persons.concat(returnedPerson));
         setNewName('');
         setNewNumber('');
+        setMessage(`Added ${returnedPerson.name}`);
+        setMessageType(`add-name`);
+        setTimeout(() => setMessage(null), 5000);
       });
     }
   };
@@ -84,9 +97,17 @@ const App = () => {
     }
   };
 
+  const Notification = ({ message, className }) => {
+    if (message === null) {
+      return null;
+    }
+    return <div className={className}>{message}</div>;
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} className={messageType} />
       <Filter searchName={searchName} handleSearch={handleSearch} />
       <h3>Add a new</h3>
       <PersonForm
