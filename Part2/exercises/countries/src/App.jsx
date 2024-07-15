@@ -3,6 +3,7 @@ import countryAPIService from './services/countries';
 import Display from './components/Display';
 
 const App = () => {
+  const [value, setValue] = useState('');
   const [countries, setCountries] = useState(null);
 
   useEffect(() => {
@@ -14,7 +15,8 @@ const App = () => {
   };
 
   const handleChange = (event) => {
-    setCountries(event.target.value);
+    console.log(event.target.value);
+    setValue(event.target.value);
   };
 
   return (
