@@ -6,9 +6,9 @@ const Display = ({ countries }) => {
   } else if (countries.length <= 10 && countries.length > 1) {
     return (
       <div>
-        {countries.map((country) => {
-          <div>{country.name.common}</div>;
-        })}
+        {countries.map((country) => (
+          <div key={country.name.common}>{country.name.common}</div>
+        ))}
       </div>
     );
   }
