@@ -4,7 +4,7 @@ app.use(express.json());
 
 // const http = require('http');
 
-// 1. Hello World server:
+// * Hello World server:
 // const app = http.createServer((request, response) => {
 //   response.writeHead(200, { 'Content-Type': 'text/plain' });
 //   response.end('Hello World');
@@ -79,7 +79,7 @@ app.post('/api/notes', (request, response) => {
   response.json(note);
 });
 
-// 1. Hello World server (cont)
+// * Hello World server (cont)
 // const app = http.createServer((request, response) => {
 //   response.writeHead(200, { 'Content-Type': 'application/json' });
 //   response.end(JSON.stringify(notes));
