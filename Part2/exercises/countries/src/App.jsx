@@ -13,12 +13,6 @@ const App = () => {
           country.name.common.toLowerCase().includes(value.toLowerCase())
         );
         setCountries(matchedCountries);
-        console.log(
-          `First matched country for testing: ${JSON.stringify(
-            matchedCountries[0]
-          )}`
-        );
-        console.log(matchedCountries.length);
       });
     } else {
       setCountries([]);
@@ -26,7 +20,6 @@ const App = () => {
   }, [value]);
 
   const handleChange = (event) => {
-    console.log(`handleChange called with value: ${event.target.value}`);
     setValue(event.target.value);
   };
 
