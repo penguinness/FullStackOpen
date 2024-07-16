@@ -1,2 +1,47 @@
 # FullStackOpen
+
 This repository contains my work (lectures and assignments) for the [University of Helsinki's Full Stack Open curriculum.](https://fullstackopen.com/en)
+
+## Part 0: Fundamentals of Web apps
+
+These are some preliminary diagrams to understand how web applications work under the hood
+
+- [New note diagram](./Part0/0.4.new-note-diagram.md)
+
+- [Single-page-app diagram](./Part0/0.5.spa-diagram.md)
+
+- [New note single-page-app diagram](./Part0/0.6.new-note-spa-diagram.md)
+
+## Part 1: Introduction to React
+
+In Part 1, I made some React apps which interactively render information on the browser.
+
+What I learned: Event handling, component handling, state handling, conditional rendering.
+
+- [Anecdotes](./Part1/exercises/anecdotes/)
+
+- [CourseInfo](./Part1/exercises/courseinfo/)
+
+- [UniCafe](./Part1/exercises/unicafe/)
+
+## Part 2: Communicating with server
+
+In Part 2, I made some React apps which communicate with JSON objects/servers.
+
+What I learned: Array handling, forms handling, server communication (GET, PUT, POST, DELETE), error handling, exception handling, API fetching.
+
+Note: Part 2's CourseInfo is an improvement of Part 1's CourseInfo
+
+- [Countries](./Part2/exercises/countries/)
+
+- [CourseInfo](./Part2/exercises/courseinfo/)
+
+- [Phonebook](./Part2/exercises/phonebook/)
+
+## Part 3: Programming a server with NodeJS and Express
+
+In Part 3, I made a backend server to Part 2's Phonebook application using Node and Express.
+
+What I learned: Node JS, Express JS, nodemon, Postman, middleware, deployment, validation, linting.
+
+- [Phonebook Backend](./Part3/exercises/phonebook-backend/)

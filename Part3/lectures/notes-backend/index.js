@@ -2,14 +2,6 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
-// const http = require('http');
-
-// * Hello World server:
-// const app = http.createServer((request, response) => {
-//   response.writeHead(200, { 'Content-Type': 'text/plain' });
-//   response.end('Hello World');
-// });
-
 let notes = [
   {
     id: 1,
@@ -78,12 +70,6 @@ app.post('/api/notes', (request, response) => {
 
   response.json(note);
 });
-
-// * Hello World server (cont)
-// const app = http.createServer((request, response) => {
-//   response.writeHead(200, { 'Content-Type': 'application/json' });
-//   response.end(JSON.stringify(notes));
-// });
 
 const PORT = 3001;
 app.listen(PORT);
