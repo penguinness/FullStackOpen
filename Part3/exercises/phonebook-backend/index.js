@@ -1,9 +1,15 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 
+//express middleware
 const app = express();
 app.use(express.json());
 
+//cors middleware
+app.use(cors());
+
+//morgan middleware
 morgan.token('body', function (req) {
   return JSON.stringify(req.body);
 });
@@ -12,6 +18,7 @@ app.use(
   morgan(':method :url :status :res[content-length] - :response-time ms :body')
 );
 
+//persons resource
 let persons = [
   {
     id: '1',
@@ -35,6 +42,7 @@ let persons = [
   },
 ];
 
+//route handlers
 app.get('/api/persons', (request, response) => {
   response.json(persons);
 });

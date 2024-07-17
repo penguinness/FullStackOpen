@@ -42,6 +42,6 @@ Note: Part 2's CourseInfo is an improvement of Part 1's CourseInfo
 
 In Part 3, I made a backend server to Part 2's Phonebook application using Node and Express.
 
-What I learned: Node JS, Express JS, morgan, cors, nodemon, Postman, middleware, deployment, validation, linting.
+What I learned: Node JS, Express JS, morgan, cors, nodemon, Postman, middleware, deployment, MongoDB, validation, linting.
 
 - [Phonebook Backend](./Part3/exercises/phonebook-backend/)
