@@ -43,6 +43,10 @@ let persons = [
 ];
 
 //route handlers
+app.get('/', (request, response) => {
+  response.send('<h1>Phonebook Backend</h1>');
+});
+
 app.get('/api/persons', (request, response) => {
   response.json(persons);
 });
