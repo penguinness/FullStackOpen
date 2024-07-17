@@ -1,11 +1,11 @@
+// express middleware
 const express = require('express');
 const app = express();
 app.use(express.json());
 
+// cors middleware
 const cors = require('cors');
 app.use(cors());
-
-app.use(express.static('dist'));
 
 //printing information about every request sent to the server
 const requestLogger = (request, response, next) => {
@@ -18,13 +18,10 @@ const requestLogger = (request, response, next) => {
 
 app.use(requestLogger);
 
-//catching requests to nonexistent route
-const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: 'unknown endpoint' });
-};
+// static middleware (place right before routes definition)
+app.use(express.static('dist'));
 
-app.use(unknownEndpoint);
-
+// notes resource
 let notes = [
   {
     id: 1,
@@ -43,6 +40,7 @@ let notes = [
   },
 ];
 
+// route handlers
 app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>');
 });
@@ -93,6 +91,13 @@ app.post('/api/notes', (request, response) => {
 
   response.json(note);
 });
+
+// 404 error handling middleware for unknown endpoints (placed in the end)
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' });
+};
+
+app.use(unknownEndpoint);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT);
