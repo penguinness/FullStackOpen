@@ -61,7 +61,8 @@ Note: Part 3's Notes is a slightly modified version of Part 2's Notes for integr
 - [Notes](./Part3/lectures/notes/)
 
 - [NotesBackend](./Part3/lectures/notes-backend/)
+  The site is deployed here (add `/api/notes` to the end of the url to see the backend resource): https://notes-backend-autumn-cloud-5066.fly.dev/
 
 - [PhonebookBackend](./Part3/exercises/phonebook-backend/)
 
-  The backend server is deployed here (add `/api/persons` to the end of the url to see the backend resource): https://phonebook-backend-black-meadow-4882.fly.dev/
+  The site is deployed here (add `/api/persons` to the end of the url to see the backend resource): https://phonebook-backend-black-meadow-4882.fly.dev/
