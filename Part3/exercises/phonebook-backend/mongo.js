@@ -5,52 +5,44 @@ if (process.argv.length < 3) {
   process.exit(1);
 }
 
-if (process.argv.length < 4) {
-  console.log('give name as argument');
-  process.exit(1);
-}
-
-if (process.argv.length < 5) {
-  console.log('give number as argument');
-  process.exit(1);
-}
-
 //establishing connection to database
 
 const password = process.argv[2];
 
-const url = `mongodb+srv://penguinness:${password}@cluster0.433ekwp.mongodb.net/noteApp?retryWrites=true&w=majority&appName=Cluster0`;
+const url = `mongodb+srv://penguinness:${password}@cluster0.nizft1r.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 mongoose.set('strictQuery', false);
 
 mongoose.connect(url);
 
-// define schema for note and matching model
+// define schema for person and matching model
 
-const noteSchema = new mongoose.Schema({
-  content: String,
-  important: Boolean,
+const personSchema = new mongoose.Schema({
+  name: String,
+  number: String,
 });
 
-const Note = mongoose.model('Note', noteSchema);
+const Person = mongoose.model('Person', personSchema);
 
-// // create a new note object
+// save the person to the database
 
-// const note = new Note({
-//   content: 'HTML is easy',
-//   important: true,
-// });
-
-// // save the object to the database
-
-// note.save().then((result) => {
-//   console.log('note saved!');
-//   mongoose.connection.close();
-// });
-
-Note.find({}).then((result) => {
-  result.forEach((note) => {
-    console.log(note);
+if (process.argv.length === 3) {
+  Person.find({}).then((result) => {
+    console.log(`phonebook:`);
+    result.forEach((person) => {
+      console.log(`${person.name} ${person.number}`);
+    });
+    mongoose.connection.close();
   });
-  mongoose.connection.close();
-});
+} else if (process.argv.length === 5) {
+  const name = process.argv[3];
+  const number = process.argv[4];
+  const person = new Person({
+    name,
+    number,
+  });
+  person.save().then((result) => {
+    console.log(`added ${name} number ${number} to phonebook`);
+    mongoose.connection.close();
+  });
+}
