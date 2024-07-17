@@ -45,3 +45,5 @@ In Part 3, I made a backend server to Part 2's Phonebook application using Node 
 What I learned: Node JS, Express JS, morgan, cors, nodemon, Postman, middleware, deployment, MongoDB, validation, linting.
 
 - [Phonebook Backend](./Part3/exercises/phonebook-backend/)
+
+  The backend server is deployed here (add `/api/persons` to the end of the url to see the backend resource): https://phonebook-backend-black-meadow-4882.fly.dev/
