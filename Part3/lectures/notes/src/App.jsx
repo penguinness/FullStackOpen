@@ -72,6 +72,7 @@ const App = () => {
   };
 
   const notesToShow = showAll ? notes : notes.filter((note) => note.important);
+  console.log('notesToShow:', notesToShow); // Add this line
 
   return (
     <div>
