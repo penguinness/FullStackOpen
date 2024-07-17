@@ -18,6 +18,9 @@ app.use(
   morgan(':method :url :status :res[content-length] - :response-time ms :body')
 );
 
+// static middleware (place right before routes definition)
+app.use(express.static('dist'));
+
 //persons resource
 let persons = [
   {
