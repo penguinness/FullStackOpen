@@ -18,6 +18,14 @@ In Part 1, I made some React apps which interactively render information on the 
 
 What I learned: Event handling, component handling, state handling, conditional rendering.
 
+- [Greetings](./Part1/lectures/greetings/)
+
+- [Counter](./Part1/lectures/counter/)
+
+- [LeftRight](./Part1/lectures/leftright/)
+
+- [StrangeCounter](./Part1/lectures/strangecounter/)
+
 - [Anecdotes](./Part1/exercises/anecdotes/)
 
 - [CourseInfo](./Part1/exercises/courseinfo/)
@@ -32,6 +40,10 @@ What I learned: Array handling, forms handling, server communication (GET, PUT, 
 
 Note: Part 2's CourseInfo is an improvement of Part 1's CourseInfo
 
+- [Notes](./Part2/lectures/notes/)
+
+- [ExchangeRate](./Part2/lectures/exchangerate/)
+
 - [Countries](./Part2/exercises/countries/)
 
 - [CourseInfo](./Part2/exercises/courseinfo/)
@@ -40,10 +52,16 @@ Note: Part 2's CourseInfo is an improvement of Part 1's CourseInfo
 
 ## Part 3: Programming a server with NodeJS and Express
 
-In Part 3, I made a backend server to Part 2's Phonebook application using Node and Express.
+In Part 3, I made some backend servers using Node and Express.
 
 What I learned: Node JS, Express JS, morgan, cors, nodemon, Postman, middleware, deployment, MongoDB, validation, linting.
 
-- [Phonebook Backend](./Part3/exercises/phonebook-backend/)
+Note: Part 3's Notes is a slightly modified version of Part 2's Notes for integration purposes.
+
+- [Notes](./Part3/lectures/notes/)
+
+- [NotesBackend](./Part3/lectures/notes-backend/)
+
+- [PhonebookBackend](./Part3/exercises/phonebook-backend/)
 
   The backend server is deployed here (add `/api/persons` to the end of the url to see the backend resource): https://phonebook-backend-black-meadow-4882.fly.dev/
