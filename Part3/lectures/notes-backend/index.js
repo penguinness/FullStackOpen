@@ -1,4 +1,6 @@
 // express middleware
+require('dotenv').config();
+
 const express = require('express');
 const app = express();
 app.use(express.json());
@@ -17,6 +19,31 @@ const requestLogger = (request, response, next) => {
 };
 
 app.use(requestLogger);
+
+const mongoose = require('mongoose');
+
+const password = process.argv[2];
+
+// DO NOT SAVE YOUR PASSWORD TO GITHUB!!
+const url = process.env.MONGODB_URL;
+
+mongoose.set('strictQuery', false);
+mongoose.connect(url);
+
+const noteSchema = new mongoose.Schema({
+  content: String,
+  important: Boolean,
+});
+
+noteSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString();
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
+
+const Note = mongoose.model('Note', noteSchema);
 
 // static middleware (place right before routes definition)
 app.use(express.static('dist'));
@@ -46,7 +73,9 @@ app.get('/', (request, response) => {
 });
 
 app.get('/api/notes', (request, response) => {
-  response.json(notes);
+  Note.find({}).then((notes) => {
+    response.json(notes);
+  });
 });
 
 app.get('/api/notes/:id', (request, response) => {
