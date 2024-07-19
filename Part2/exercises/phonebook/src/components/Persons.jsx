@@ -1,7 +1,7 @@
-const Persons = ({ filteredNames, handleDelete }) => {
+const Persons = ({ filteredPersons, handleDelete }) => {
   return (
     <div>
-      {filteredNames.map((person) => {
+      {filteredPersons.map((person) => {
         return (
           <p key={person.name}>
             {person.name} {person.number}

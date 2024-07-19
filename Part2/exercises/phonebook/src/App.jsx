@@ -11,12 +11,27 @@ const App = () => {
   const [searchName, setSearchName] = useState('');
   const [message, setMessage] = useState(null);
   const [messageType, setMessageType] = useState(null);
+  const [filteredPersons, setFilteredPersons] = useState([]);
 
   useEffect(() => {
     personService
       .getAll()
       .then((initialPhonebook) => setPersons(initialPhonebook));
+    console.log('initially rendered persons:', persons);
   }, []);
+
+  useEffect(() => {
+    console.log('about to be filtered persons:', persons);
+    const newFilteredPersons = persons.filter((person) =>
+      person.name.toLowerCase().includes(searchName.toLowerCase())
+    );
+    setFilteredPersons(newFilteredPersons);
+    console.log('filtered persons:', newFilteredPersons);
+  }, [persons, searchName]);
+
+  useEffect(() => {
+    console.log('filteredPersons state updated:', filteredPersons);
+  }, [filteredPersons]);
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -79,10 +94,6 @@ const App = () => {
     setSearchName(event.target.value);
   };
 
-  const filteredNames = persons.filter((person) =>
-    person.name.toLowerCase().includes(searchName.toLowerCase())
-  );
-
   const removePerson = (id) => {
     const removedPerson = persons.find((person) => person.id === id);
 
@@ -118,7 +129,7 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h3>Numbers</h3>
-      <Persons filteredNames={filteredNames} handleDelete={removePerson} />
+      <Persons filteredPersons={filteredPersons} handleDelete={removePerson} />
     </div>
   );
 };
