@@ -45,24 +45,41 @@ const App = () => {
             )
           )
           .catch((error) => {
-            setMessage(
-              `Information of ${needChangePerson.name} has already been removed from server`
-            );
-            setMessageType(`error`);
-            setPersons(
-              persons.filter((person) => person.id !== needChangePerson.id)
-            );
+            if (error.response.data.error.includes('validation failed')) {
+              setMessage(error.response.data.error);
+              setMessageType('error');
+            } else {
+              setMessage(
+                `Information of ${needChangePerson.name} has already been removed from server`
+              );
+              setMessageType(`error`);
+              setPersons(
+                persons.filter((person) => person.id !== needChangePerson.id)
+              );
+            }
+            setMessage(error.response.data.error);
+            setMessageType('error');
           });
       }
     } else {
-      personService.create(personObject).then((returnedPerson) => {
-        setNewName('');
-        setNewNumber('');
-        setPersons(persons.concat(returnedPerson));
-        setMessage(`Added ${returnedPerson.name}`);
-        setMessageType(`add-name`);
-        setTimeout(() => setMessage(null), 5000);
-      });
+      personService
+        .create(personObject)
+        .then((returnedPerson) => {
+          setNewName('');
+          setNewNumber('');
+          setPersons(persons.concat(returnedPerson));
+          setMessage(`Added ${returnedPerson.name}`);
+          setMessageType(`add-name`);
+          setTimeout(() => setMessage(null), 5000);
+        })
+        .catch((error) => {
+          if (error.response.data.error.includes('validation failed')) {
+            setMessage(error.response.data.error);
+            setMessageType('error');
+          }
+          setMessage(error.response.data.error);
+          setMessageType('error');
+        });
     }
   };
 
