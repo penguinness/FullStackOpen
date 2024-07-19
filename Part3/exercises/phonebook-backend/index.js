@@ -135,6 +135,9 @@ app.put('/api/persons/:id', (request, response, next) => {
 
   Person.findByIdAndUpdate(request.params.id, person, { new: true })
     .then((updatedPerson) => {
+      if (!updatedPerson) {
+        return response.status(404).json({ error: '404 not found' });
+      }
       response.json(updatedPerson);
     })
     .catch((error) => next(error));

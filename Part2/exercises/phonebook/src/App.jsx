@@ -11,34 +11,18 @@ const App = () => {
   const [searchName, setSearchName] = useState('');
   const [message, setMessage] = useState(null);
   const [messageType, setMessageType] = useState(null);
-  const [filteredPersons, setFilteredPersons] = useState([]);
 
   useEffect(() => {
     personService
       .getAll()
       .then((initialPhonebook) => setPersons(initialPhonebook));
-    console.log('initially rendered persons:', persons);
   }, []);
-
-  useEffect(() => {
-    console.log('about to be filtered persons:', persons);
-    const newFilteredPersons = persons.filter((person) =>
-      person.name.toLowerCase().includes(searchName.toLowerCase())
-    );
-    setFilteredPersons(newFilteredPersons);
-    console.log('filtered persons:', newFilteredPersons);
-  }, [persons, searchName]);
-
-  useEffect(() => {
-    console.log('filteredPersons state updated:', filteredPersons);
-  }, [filteredPersons]);
 
   const addPerson = (event) => {
     event.preventDefault();
     const personObject = {
       name: newName,
       number: newNumber,
-      id: (persons.length + 1).toString(),
     };
 
     if (persons.some((person) => person.name === newName)) {
@@ -72,9 +56,9 @@ const App = () => {
       }
     } else {
       personService.create(personObject).then((returnedPerson) => {
-        setPersons(persons.concat(returnedPerson));
         setNewName('');
         setNewNumber('');
+        setPersons(persons.concat(returnedPerson));
         setMessage(`Added ${returnedPerson.name}`);
         setMessageType(`add-name`);
         setTimeout(() => setMessage(null), 5000);
@@ -114,6 +98,10 @@ const App = () => {
     }
     return <div className={className}>{message}</div>;
   };
+
+  const filteredPersons = persons.filter((person) =>
+    person.name.toLowerCase().includes(searchName.toLowerCase())
+  );
 
   return (
     <div>
