@@ -72,11 +72,13 @@ app.get('/api/persons/:id', (request, response) => {
     .then((person) => {
       response.json(person)
     })
+    // eslint-disable-next-line no-undef
     .catch((error) => next(error))
 })
 
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndDelete(request.params.id)
+    // eslint-disable-next-line no-unused-vars
     .then((result) => {
       response.status(204).end()
     })
