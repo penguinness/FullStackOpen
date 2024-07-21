@@ -72,7 +72,7 @@ Note: Part 3's Notes is a slightly modified version of Part 2's Notes for integr
 
 In Part 4, I made some backend applications, wrote tests for them, integrated user administration and token authentication.
 
-What I learned: Project structuring
+What I learned: Project structuring, Lodash
 
 Note: Part 4's Notes project is a vastly improved version of Part 3's Notes project.
 
