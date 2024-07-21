@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \\\"Error: no test specified\\\" && exit 1",
+    "test": "node --test",
     "build:ui": "rm -rf dist && cd ../notes/ && npm run build && cp -r dist ../notes-backend",
     "deploy": "fly deploy",
     "deploy:full": "npm run build:ui && npm run deploy",
