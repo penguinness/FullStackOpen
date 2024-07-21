@@ -6,6 +6,11 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 export default [
   js.configs.recommended,
   {
+    settings: {
+      react: {
+        version: 'detect', // Automatically detect the React version
+      },
+    },
     files: ['**/*.js'],
     languageOptions: {
       sourceType: 'commonjs',
@@ -22,7 +27,7 @@ export default [
       '@stylistic/js/linebreak-style': ['error', 'unix'],
       '@stylistic/js/quotes': ['error', 'single'],
       '@stylistic/js/semi': ['error', 'never'],
-      'eqeqeq': 'error',
+      eqeqeq: 'error',
       'no-trailing-spaces': 'error',
       'object-curly-spacing': ['error', 'always'],
       'arrow-spacing': ['error', { before: true, after: true }],
