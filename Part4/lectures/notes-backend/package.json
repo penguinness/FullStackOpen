@@ -3,14 +3,14 @@
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
     "build:ui": "rm -rf dist && cd ../notes/ && npm run build && cp -r dist ../notes-backend",
     "deploy": "fly deploy",
     "deploy:full": "npm run build:ui && npm run deploy",
     "logs:prod": "fly logs",
     "lint": "eslint .",
-    "test": "node --test"
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "test": "cross-env  NODE_ENV=test node --test"
   },
   "author": "Matti Luukkainen",
   "license": "MIT",
@@ -19,6 +19,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-async-errors": "^3.1.1",
     "mongodb": "^6.8.0",
     "mongoose": "^8.5.1"
   },
@@ -26,11 +27,13 @@
     "@eslint/js": "^9.7.0",
     "@flydotio/dockerfile": "^0.5.8",
     "@stylistic/eslint-plugin-js": "^2.3.0",
+    "cross-env": "^7.0.3",
     "eslint": "^9.7.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "globals": "^15.8.0",
     "nodemon": "^3.1.4",
-    "prettier": "^3.3.3"
+    "prettier": "3.3.3",
+    "supertest": "^7.0.0"
   }
 }

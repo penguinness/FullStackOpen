@@ -1,16 +1,10 @@
 import globals from 'globals';
 import stylisticJs from '@stylistic/eslint-plugin-js';
 import js from '@eslint/js';
-import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default [
   js.configs.recommended,
   {
-    settings: {
-      react: {
-        version: 'detect', // Automatically detect the React version
-      },
-    },
     files: ['**/*.js'],
     languageOptions: {
       sourceType: 'commonjs',
@@ -37,9 +31,7 @@ export default [
   {
     ignores: ['dist/**', 'build/**'],
   },
-  eslintConfigPrettier,
+  {
+    extends: ['plugin:prettier/recommended'],
+  },
 ];
-
-//some notes:
-// run "npm install --save-dev eslint-config-prettier" and import to integrate ESLint and Prettier
-// run "npx eslint . --fix" to fix
