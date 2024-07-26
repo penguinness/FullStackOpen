@@ -12,8 +12,13 @@ const User = require('../models/user');
 const Blog = require('../models/blog');
 
 beforeEach(async () => {
+  await User.deleteMany({});
   await Blog.deleteMany({});
 
+  const passwordHash = await bcrypt.hash('sekret', 10);
+  const user = new User({ username: 'root', passwordHash });
+
+  await user.save();
   await Blog.insertMany(helper.initialBlogs);
 });
 
@@ -41,6 +46,26 @@ test('the unique identifier property of blog posts is named id', async () => {
 });
 
 test('a valid blog can be added ', async () => {
+  const newUser = {
+    name: 'Random User',
+    username: 'randomuser',
+    password: 'randompassword',
+  };
+
+  await api
+    .post('/api/users')
+    .send(newUser)
+    .expect(201)
+    .expect('Content-Type', /application\/json/);
+
+  const loginResponse = await api
+    .post('/api/login')
+    .send({ username: newUser.username, password: newUser.password })
+    .expect(200)
+    .expect('Content-Type', /application\/json/);
+
+  const token = loginResponse.body.token;
+
   const newBlog = {
     title: 'Random Blog',
     author: 'Rando',
@@ -51,6 +76,7 @@ test('a valid blog can be added ', async () => {
   await api
     .post('/api/blogs')
     .send(newBlog)
+    .set('Authorization', `Bearer ${token}`)
     .expect(201)
     .expect('Content-Type', /application\/json/);
 
@@ -64,6 +90,26 @@ test('a valid blog can be added ', async () => {
 });
 
 test('a blog missing likes is default to 0', async () => {
+  const newUser = {
+    name: 'Random User',
+    username: 'randomuser',
+    password: 'randompassword',
+  };
+
+  await api
+    .post('/api/users')
+    .send(newUser)
+    .expect(201)
+    .expect('Content-Type', /application\/json/);
+
+  const loginResponse = await api
+    .post('/api/login')
+    .send({ username: newUser.username, password: newUser.password })
+    .expect(200)
+    .expect('Content-Type', /application\/json/);
+
+  const token = loginResponse.body.token;
+
   const newBlog = {
     title: 'Random Blog',
     author: 'Rando',
@@ -73,6 +119,7 @@ test('a blog missing likes is default to 0', async () => {
   const response = await api
     .post('/api/blogs')
     .send(newBlog)
+    .set('Authorization', `Bearer ${token}`)
     .expect(201)
     .expect('Content-Type', /application\/json/);
 
@@ -80,13 +127,37 @@ test('a blog missing likes is default to 0', async () => {
 });
 
 test('blog without title is not added', async () => {
+  const newUser = {
+    name: 'Random User',
+    username: 'randomuser',
+    password: 'randompassword',
+  };
+
+  await api
+    .post('/api/users')
+    .send(newUser)
+    .expect(201)
+    .expect('Content-Type', /application\/json/);
+
+  const loginResponse = await api
+    .post('/api/login')
+    .send({ username: newUser.username, password: newUser.password })
+    .expect(200)
+    .expect('Content-Type', /application\/json/);
+
+  const token = loginResponse.body.token;
+
   const newBlog = {
     author: 'Rando',
     url: 'https://randomblog.com',
     likes: 0,
   };
 
-  await api.post('/api/blogs').send(newBlog).expect(400);
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .set('Authorization', `Bearer ${token}`)
+    .expect(400);
 
   const response = await api.get('/api/blogs');
 
@@ -94,13 +165,37 @@ test('blog without title is not added', async () => {
 });
 
 test('blog without url is not added', async () => {
+  const newUser = {
+    name: 'Random User',
+    username: 'randomuser',
+    password: 'randompassword',
+  };
+
+  await api
+    .post('/api/users')
+    .send(newUser)
+    .expect(201)
+    .expect('Content-Type', /application\/json/);
+
+  const loginResponse = await api
+    .post('/api/login')
+    .send({ username: newUser.username, password: newUser.password })
+    .expect(200)
+    .expect('Content-Type', /application\/json/);
+
+  const token = loginResponse.body.token;
+
   const newBlog = {
     title: 'Random Blog',
     author: 'Rando',
     likes: 0,
   };
 
-  await api.post('/api/blogs').send(newBlog).expect(400);
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .set('Authorization', `Bearer ${token}`)
+    .expect(400);
 
   const response = await api.get('/api/blogs');
 
