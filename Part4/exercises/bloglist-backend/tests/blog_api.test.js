@@ -202,18 +202,175 @@ test('blog without url is not added', async () => {
   assert.strictEqual(response.body.length, helper.initialBlogs.length);
 });
 
-test('a blog with valid id can be deleted', async () => {
-  const blogsAtStart = await helper.blogsInDb();
-  const blogToDelete = blogsAtStart[0];
+test('a blog with valid id and user can be deleted', async () => {
+  const newUser = {
+    name: 'Random User',
+    username: 'randomuser',
+    password: 'randompassword',
+  };
 
-  await api.delete(`/api/blogs/${blogToDelete.id}`).expect(204);
+  await api
+    .post('/api/users')
+    .send(newUser)
+    .expect(201)
+    .expect('Content-Type', /application\/json/);
+
+  const loginResponse = await api
+    .post('/api/login')
+    .send({ username: newUser.username, password: newUser.password })
+    .expect(200)
+    .expect('Content-Type', /application\/json/);
+
+  const token = loginResponse.body.token;
+
+  const newBlog = {
+    title: 'Random Blog',
+    author: 'Rando',
+    url: 'https://randomblog.com',
+    likes: 24,
+  };
+
+  const blogResponse = await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .set('Authorization', `Bearer ${token}`)
+    .expect(201)
+    .expect('Content-Type', /application\/json/);
+
+  const blogToDelete = blogResponse.body;
+
+  const blogsAtStart = await helper.blogsInDb();
+
+  await api
+    .delete(`/api/blogs/${blogToDelete.id}`)
+    .set('Authorization', `Bearer ${token}`)
+    .expect(204);
 
   const blogsAtEnd = await helper.blogsInDb();
 
-  assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length - 1);
+  assert.strictEqual(blogsAtEnd.length, blogsAtStart.length - 1);
 
   const titles = blogsAtEnd.map((r) => r.title);
   assert(!titles.includes(blogToDelete.title));
+});
+
+test('deletion fails if user is invalid', async () => {
+  const newUser1 = {
+    name: 'Random User 1',
+    username: 'randomuser1',
+    password: 'randompassword1',
+  };
+
+  await api
+    .post('/api/users')
+    .send(newUser1)
+    .expect(201)
+    .expect('Content-Type', /application\/json/);
+
+  const loginResponse1 = await api
+    .post('/api/login')
+    .send({ username: newUser1.username, password: newUser1.password })
+    .expect(200)
+    .expect('Content-Type', /application\/json/);
+
+  const token1 = loginResponse1.body.token;
+
+  const newBlog = {
+    title: 'Random Blog',
+    author: 'Rando',
+    url: 'https://randomblog.com',
+    likes: 24,
+  };
+
+  const blogResponse = await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .set('Authorization', `Bearer ${token1}`)
+    .expect(201)
+    .expect('Content-Type', /application\/json/);
+
+  const blogToDelete = blogResponse.body;
+
+  const blogsAtStart = await helper.blogsInDb();
+
+  const newUser2 = {
+    name: 'Random User 2',
+    username: 'randomuser2',
+    password: 'randompassword2',
+  };
+
+  await api
+    .post('/api/users')
+    .send(newUser2)
+    .expect(201)
+    .expect('Content-Type', /application\/json/);
+
+  const loginResponse2 = await api
+    .post('/api/login')
+    .send({ username: newUser2.username, password: newUser2.password })
+    .expect(200)
+    .expect('Content-Type', /application\/json/);
+
+  const token2 = loginResponse2.body.token;
+
+  await api
+    .delete(`/api/blogs/${blogToDelete.id}`)
+    .set('Authorization', `Bearer ${token2}`)
+    .expect(401)
+    .expect('Content-Type', /application\/json/);
+
+  const blogsAtEnd = await helper.blogsInDb();
+
+  assert.strictEqual(blogsAtEnd.length, blogsAtStart.length);
+});
+
+test('deletion fails if no token is provided', async () => {
+  const newUser = {
+    name: 'Random User',
+    username: 'randomuser',
+    password: 'randompassword',
+  };
+
+  await api
+    .post('/api/users')
+    .send(newUser)
+    .expect(201)
+    .expect('Content-Type', /application\/json/);
+
+  const loginResponse = await api
+    .post('/api/login')
+    .send({ username: newUser.username, password: newUser.password })
+    .expect(200)
+    .expect('Content-Type', /application\/json/);
+
+  const token = loginResponse.body.token;
+
+  const newBlog = {
+    title: 'Random Blog',
+    author: 'Rando',
+    url: 'https://randomblog.com',
+    likes: 24,
+  };
+
+  const blogResponse = await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .set('Authorization', `Bearer ${token}`)
+    .expect(201)
+    .expect('Content-Type', /application\/json/);
+
+  const blogToDelete = blogResponse.body;
+
+  const blogsAtStart = await helper.blogsInDb();
+
+  await api
+    .delete(`/api/blogs/${blogToDelete.id}`)
+    .expect(401)
+    .expect('Content-Type', /application\/json/);
+
+  const blogsAtEnd = await helper.blogsInDb();
+
+  assert.strictEqual(blogsAtEnd.length, blogsAtStart.length);
 });
 
 describe('when there is initially one user in db', () => {
