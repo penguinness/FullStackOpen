@@ -93,3 +93,5 @@ Note: Part 5's Notes project is a vastly extended version of Part 4's Notes proj
 - [Notes](./Part5/lectures/notes/)
 
 - [NotesBackend](./Part5/lectures/notes-backend/)
+
+- [BloglistFrontend](./Part5/exercises/bloglist-frontend/)
