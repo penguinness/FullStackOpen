@@ -202,6 +202,43 @@ test('blog without url is not added', async () => {
   assert.strictEqual(response.body.length, helper.initialBlogs.length);
 });
 
+test('adding fails if token is not provided', async () => {
+  const newUser = {
+    name: 'Random User',
+    username: 'randomuser',
+    password: 'randompassword',
+  };
+
+  await api
+    .post('/api/users')
+    .send(newUser)
+    .expect(201)
+    .expect('Content-Type', /application\/json/);
+
+  await api
+    .post('/api/login')
+    .send({ username: newUser.username, password: newUser.password })
+    .expect(200)
+    .expect('Content-Type', /application\/json/);
+
+  const newBlog = {
+    title: 'Random Blog',
+    author: 'Rando',
+    url: 'https://randomblog.com',
+    likes: 24,
+  };
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(401)
+    .expect('Content-Type', /application\/json/);
+
+  const response = await api.get('/api/blogs');
+
+  assert.strictEqual(response.body.length, helper.initialBlogs.length);
+});
+
 test('a blog with valid id and user can be deleted', async () => {
   const newUser = {
     name: 'Random User',
