@@ -70,9 +70,9 @@ Note: Part 3's Notes is a slightly modified version of Part 2's Notes for integr
 
 ## Part 4: Testing Express servers, user administration
 
-In Part 4, I made some backend applications, wrote tests for them, integrated user administration and token authentication.
+In Part 4, I made some backend applications, wrote tests for them, and integrated user administration and token authentication.
 
-What I learned: Project structuring, lodash, supertest, testing, asynchronous operation (async/await), user administration, bcrypt.
+What I learned: Project structuring, lodash, supertest, testing, asynchronous operation (async/await), user administration, bcrypt, token authentication (jsonwebtoken), populate.
 
 Note: Part 4's Notes project is a vastly extended version of Part 3's Notes project.
 
@@ -81,3 +81,15 @@ Note: Part 4's Notes project is a vastly extended version of Part 3's Notes proj
 - [NotesBackend](./Part4/lectures/notes-backend/)
 
 - [BloglistBackend](./Part4/exercises/bloglist-backend/)
+
+## Part 5: Testing React apps
+
+In Part 5, I integrated user administration and token authentication into the frontend of some applications and wrote end-to-end tests using Playwright and Cypress.
+
+What I learned: frontend login, local storage.
+
+Note: Part 5's Notes project is a vastly extended version of Part 4's Notes project.
+
+- [Notes](./Part5/lectures/notes/)
+
+- [NotesBackend](./Part5/lectures/notes-backend/)

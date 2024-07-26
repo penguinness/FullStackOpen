@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
-    "test": "cross-env  NODE_ENV=test node --test"
+    "test": "cross-env  NODE_ENV=test node --test",
+    "prettier": "prettier --write ."
   },
   "author": "Matti Luukkainen",
   "license": "MIT",
@@ -35,7 +36,7 @@
     "eslint-plugin-prettier": "^5.2.1",
     "globals": "^15.8.0",
     "nodemon": "^3.1.4",
-    "prettier": "3.3.3",
+    "prettier": "^3.3.3",
     "supertest": "^7.0.0"
   }
 }
