@@ -291,6 +291,60 @@ test('a blog with valid id and user can be deleted', async () => {
   assert(!titles.includes(blogToDelete.title));
 });
 
+test('a blog with valid id and user can be modified (likes)', async () => {
+  const newUser = {
+    name: 'Random User',
+    username: 'randomuser',
+    password: 'randompassword',
+  };
+
+  await api
+    .post('/api/users')
+    .send(newUser)
+    .expect(201)
+    .expect('Content-Type', /application\/json/);
+
+  const loginResponse = await api
+    .post('/api/login')
+    .send({ username: newUser.username, password: newUser.password })
+    .expect(200)
+    .expect('Content-Type', /application\/json/);
+
+  const token = loginResponse.body.token;
+
+  const newBlog = {
+    title: 'Random Blog',
+    author: 'Rando',
+    url: 'https://randomblog.com',
+    likes: 24,
+  };
+
+  const blogResponse = await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .set('Authorization', `Bearer ${token}`)
+    .expect(201)
+    .expect('Content-Type', /application\/json/);
+
+  const blogToModify = blogResponse.body;
+
+  const updatedBlog = {
+    ...blogToModify,
+    likes: blogToModify.likes + 1,
+  };
+
+  await api
+    .put(`/api/blogs/${blogToModify.id}`)
+    .send(updatedBlog)
+    .set('Authorization', `Bearer ${token}`)
+    .expect(200)
+    .expect('Content-Type', /application\/json/);
+
+  const blogsAtEnd = await helper.blogsInDb();
+  const modifiedBlog = blogsAtEnd.find((blog) => blog.id === blogToModify.id);
+  assert.strictEqual(modifiedBlog.likes, updatedBlog.likes);
+});
+
 test('deletion fails if user is invalid', async () => {
   const newUser1 = {
     name: 'Random User 1',

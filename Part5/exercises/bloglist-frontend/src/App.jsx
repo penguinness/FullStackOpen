@@ -53,7 +53,7 @@ const App = () => {
     }
   };
 
-  const addBlog = (blogObject) => {
+  const createBlog = (blogObject) => {
     blogFormRef.current.toggleVisibility();
 
     blogService
@@ -71,6 +71,19 @@ const App = () => {
         setMessageType('error');
         setTimeout(() => setMessage(null), 5000);
       });
+  };
+
+  const updateBlog = async (blogObject) => {
+    try {
+      await blogService.update(blogObject.id, blogObject);
+      setBlogs((blogs) =>
+        blogs.map((blog) => (blog.id === blogObject.id ? blogObject : blog))
+      );
+    } catch (error) {
+      setMessage(error.response.data.error);
+      setMessageType('error');
+      setTimeout(() => setMessage(null), 5000);
+    }
   };
 
   const handleLogout = async (event) => {
@@ -118,10 +131,10 @@ const App = () => {
             {user.name} logged in <LogoutButton />
           </p>
           <Togglable buttonLabel='new blog' ref={blogFormRef}>
-            <BlogForm createBlog={addBlog} />
+            <BlogForm createBlog={createBlog} />
           </Togglable>
           {blogs.map((blog) => (
-            <Blog key={blog.id} blog={blog} />
+            <Blog key={blog.id} blog={blog} updateBlog={updateBlog} />
           ))}
         </div>
       )}

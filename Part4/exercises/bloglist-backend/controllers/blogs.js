@@ -73,12 +73,10 @@ blogsRouter.delete('/:id', async (request, response) => {
 });
 
 blogsRouter.put('/:id', async (request, response) => {
-  const { title, author, url, likes } = request.body;
-
-  const user = request.user;
+  const { title, author, url, likes, user } = request.body;
 
   if (!user) {
-    return response.status(401).json({ error: 'token invalid' });
+    return response.status(401).json({ error: 'user missing' });
   }
 
   if (!title || !url) {
@@ -89,7 +87,7 @@ blogsRouter.put('/:id', async (request, response) => {
     title,
     author,
     url,
-    likes: likes || 0,
+    likes,
     user: user._id,
   };
 
