@@ -96,6 +96,8 @@ const App = () => {
     return <button onClick={handleLogout}>logout</button>;
   };
 
+  const sortedBlogs = blogs.sort((a, b) => b.likes - a.likes);
+
   const loginForm = () => {
     const hideWhenVisible = { display: loginVisible ? 'none' : '' };
     const showWhenVisible = { display: loginVisible ? '' : 'none' };
@@ -133,7 +135,7 @@ const App = () => {
           <Togglable buttonLabel='new blog' ref={blogFormRef}>
             <BlogForm createBlog={createBlog} />
           </Togglable>
-          {blogs.map((blog) => (
+          {sortedBlogs.map((blog) => (
             <Blog key={blog.id} blog={blog} updateBlog={updateBlog} />
           ))}
         </div>
