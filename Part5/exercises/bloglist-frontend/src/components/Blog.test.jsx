@@ -92,3 +92,28 @@ test('if like button is clicked twice, handleLike is called twice', async () => 
 
   expect(updateBlog.mock.calls).toHaveLength(2);
 });
+
+test('form calls the createBlogs with correct details when a new blog is created', async () => {
+  const createBlog = vi.fn();
+  const user = userEvent.setup();
+
+  const { container } = render(<BlogForm createBlog={createBlog} />);
+
+  const titleInput = container.querySelector('.title-input');
+  const authorInput = container.querySelector('.author-input');
+  const urlInput = container.querySelector('.url-input');
+
+  await user.type(titleInput, 'Random Blog');
+  await user.type(authorInput, 'Rando');
+  await user.type(urlInput, 'http://randomblog.com');
+
+  const sendButton = screen.getByText('create');
+  await user.click(sendButton);
+
+  expect(createBlog.mock.calls).toHaveLength(1);
+  expect(createBlog.mock.calls[0][0]).toStrictEqual({
+    title: 'Random Blog',
+    author: 'Rando',
+    url: 'http://randomblog.com',
+  });
+});
