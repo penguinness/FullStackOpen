@@ -9,6 +9,11 @@ test('renders blog title and author, but not URL or number of likes by default',
     author: 'Rando',
     url: 'http://randomblog.com',
     likes: 7,
+    user: {
+      username: 'randomuser',
+      name: 'Random User',
+      id: 'rand0m1d',
+    },
   };
 
   const { container } = render(
@@ -26,4 +31,36 @@ test('renders blog title and author, but not URL or number of likes by default',
 
   expect(urlElement).toBeNull();
   expect(likesElement).toBeNull();
+});
+
+test('URL and number of likes are shown when view button has been clicked', async () => {
+  const blog = {
+    title: 'Random Blog',
+    author: 'Rando',
+    url: 'http://randomblog.com',
+    likes: 7,
+    user: {
+      username: 'randomuser',
+      name: 'Random User',
+      id: 'rand0m1d',
+    },
+  };
+
+  render(<Blog blog={blog} updateBlog={() => {}} removeBlog={() => {}} />);
+
+  const urlElementBeforeClick = screen.queryByText(blog.url);
+  const likesElementBeforeClick = screen.queryByText(`${blog.likes} likes`);
+
+  expect(urlElementBeforeClick).toBeNull();
+  expect(likesElementBeforeClick).toBeNull();
+
+  const user = userEvent.setup();
+  const button = screen.getByText('view');
+  await user.click(button);
+
+  const urlElementAfterClick = screen.getByText(blog.url);
+  const likesElementAfterClick = screen.getByText(`${blog.likes} likes`);
+
+  expect(urlElementAfterClick).toBeDefined();
+  expect(likesElementAfterClick).toBeDefined();
 });
