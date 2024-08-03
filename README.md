@@ -16,7 +16,7 @@ These are some preliminary diagrams to understand how web applications work unde
 
 In Part 1, I made some React apps which interactively render information on the browser.
 
-What I learned: Event handling, component handling, state handling, conditional rendering.
+What I learned: Event handling, component handling, state handling (useState, useEffect), conditional rendering.
 
 - [Greetings](./Part1/lectures/greetings/)
 
@@ -86,7 +86,7 @@ Note: Part 4's Notes project is a vastly extended version of Part 3's Notes proj
 
 In Part 5, I integrated user administration and token authentication into the frontend of some applications and wrote end-to-end tests using Playwright and Cypress.
 
-What I learned: frontend login, local storage.
+What I learned: Login on frontend (with token authentication), local storage, props.children, proptypes, useRef, forwardRef, useImperativeHandle, state lifting, frontend testing (vitest), render, screen, mock functions.
 
 Note: Part 5's Notes project is a vastly extended version of Part 4's Notes project.
 
