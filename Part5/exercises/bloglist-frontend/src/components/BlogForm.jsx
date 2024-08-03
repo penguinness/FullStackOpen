@@ -1,18 +1,18 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
 const NoteForm = ({ createBlog }) => {
-  const [newTitle, setNewTitle] = useState('');
-  const [newAuthor, setNewAuthor] = useState('');
-  const [newUrl, setNewUrl] = useState('');
+  const [newTitle, setNewTitle] = useState('')
+  const [newAuthor, setNewAuthor] = useState('')
+  const [newUrl, setNewUrl] = useState('')
 
   const addBlog = (event) => {
-    event.preventDefault();
-    createBlog({ title: newTitle, author: newAuthor, url: newUrl });
+    event.preventDefault()
+    createBlog({ title: newTitle, author: newAuthor, url: newUrl })
 
-    setNewTitle('');
-    setNewAuthor('');
-    setNewUrl('');
-  };
+    setNewTitle('')
+    setNewAuthor('')
+    setNewUrl('')
+  }
 
   return (
     <div>
@@ -43,7 +43,7 @@ const NoteForm = ({ createBlog }) => {
         <button type='submit'>create</button>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default NoteForm;
+export default NoteForm
