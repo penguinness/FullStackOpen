@@ -53,24 +53,21 @@ const App = () => {
     }
   };
 
-  const createBlog = (blogObject) => {
+  const createBlog = async (blogObject) => {
     blogFormRef.current.toggleVisibility();
-
-    blogService
-      .create(blogObject)
-      .then((returnedBlog) => {
-        setBlogs(blogs.concat(returnedBlog));
-        setMessage(
-          `a new blog ${returnedBlog.title} by ${returnedBlog.author} added`
-        );
-        setMessageType('add-blog');
-        setTimeout(() => setMessage(null), 5000);
-      })
-      .catch((error) => {
-        setMessage(error.response.data.error);
-        setMessageType('error');
-        setTimeout(() => setMessage(null), 5000);
-      });
+    try {
+      const createdBlog = await blogService.create(blogObject);
+      setBlogs(blogs.concat(createdBlog));
+      setMessage(
+        `a new blog ${createdBlog.title} by ${createdBlog.author} added`
+      );
+      setMessageType('add-blog');
+      setTimeout(() => setMessage(null), 5000);
+    } catch (error) {
+      setMessage(error.response.data.error);
+      setMessageType('error');
+      setTimeout(() => setMessage(null), 5000);
+    }
   };
 
   const updateBlog = async (blogObject) => {
@@ -79,6 +76,17 @@ const App = () => {
       setBlogs((blogs) =>
         blogs.map((blog) => (blog.id === blogObject.id ? blogObject : blog))
       );
+    } catch (error) {
+      setMessage(error.response.data.error);
+      setMessageType('error');
+      setTimeout(() => setMessage(null), 5000);
+    }
+  };
+
+  const removeBlog = async (id) => {
+    try {
+      await blogService.remove(id);
+      setBlogs((blogs) => blogs.filter((blog) => blog.id !== id));
     } catch (error) {
       setMessage(error.response.data.error);
       setMessageType('error');
@@ -136,7 +144,12 @@ const App = () => {
             <BlogForm createBlog={createBlog} />
           </Togglable>
           {sortedBlogs.map((blog) => (
-            <Blog key={blog.id} blog={blog} updateBlog={updateBlog} />
+            <Blog
+              key={blog.id}
+              blog={blog}
+              updateBlog={updateBlog}
+              removeBlog={removeBlog}
+            />
           ))}
         </div>
       )}
