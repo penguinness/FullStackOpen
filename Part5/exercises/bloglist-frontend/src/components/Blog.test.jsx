@@ -64,3 +64,31 @@ test('URL and number of likes are shown when view button has been clicked', asyn
   expect(urlElementAfterClick).toBeDefined();
   expect(likesElementAfterClick).toBeDefined();
 });
+
+test('if like button is clicked twice, handleLike is called twice', async () => {
+  const blog = {
+    title: 'Random Blog',
+    author: 'Rando',
+    url: 'http://randomblog.com',
+    likes: 7,
+    user: {
+      username: 'randomuser',
+      name: 'Random User',
+      id: 'rand0m1d',
+    },
+  };
+
+  const updateBlog = vi.fn();
+
+  render(<Blog blog={blog} updateBlog={updateBlog} removeBlog={() => {}} />);
+
+  const user = userEvent.setup();
+  const viewButton = screen.getByText('view');
+  await user.click(viewButton);
+
+  const likeButton = screen.getByText('like');
+  await user.click(likeButton);
+  await user.click(likeButton);
+
+  expect(updateBlog.mock.calls).toHaveLength(2);
+});
