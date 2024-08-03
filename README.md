@@ -86,7 +86,7 @@ Note: Part 4's Notes project is a vastly extended version of Part 3's Notes proj
 
 In Part 5, I integrated user administration and token authentication into the frontend of some applications, wrote unit tests for them, and wrote end-to-end tests using Cypress.
 
-What I learned: Login on frontend (with token authentication), local storage, props.children, proptypes, useRef, forwardRef, useImperativeHandle, state lifting, frontend unit testing (vitest), render, screen, mock functions, end-to-end testing (Cypress).
+What I learned: Login on frontend (with token authentication), local storage, props.children, proptypes, useRef, forwardRef, useImperativeHandle, state lifting, frontend unit testing (vitest), render, screen, mock functions, end-to-end testing (Playwright).
 
 Note: Part 5's Notes project is a vastly extended version of Part 4's Notes project.
 
