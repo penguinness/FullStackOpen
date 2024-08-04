@@ -74,21 +74,14 @@ describe('Blog app', () => {
         await page.getByRole('button', { name: 'like' }).click();
         await expect(page.getByText('1 likes')).toBeVisible();
       });
-    });
 
-    test('the creator of a blog can remove it', async ({ page }) => {
-      await loginWith(page, 'penguinness', 'pingu');
-      await createBlog(
-        page,
-        'Playwright Blog',
-        'Mr. Playwright',
-        'https://playwrightblog.com'
-      );
-      await page.getByRole('button', { name: 'view' }).click();
-      await page.getByRole('button', { name: 'remove' }).click();
-      await expect(
-        page.getByText('Playwright Blog - Mr. Playwright')
-      ).not.toBeVisible();
+      test('the blog can be removed', async ({ page }) => {
+        await page.getByRole('button', { name: 'view' }).click();
+        await page.getByRole('button', { name: 'remove' }).click();
+        await expect(
+          page.getByText('Playwright Blog - Mr. Playwright')
+        ).not.toBeVisible();
+      });
     });
   });
 });
