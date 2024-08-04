@@ -11,6 +11,13 @@ describe('Blog app', () => {
         password: 'pingu',
       },
     });
+    await request.post('http://localhost:3003/api/users', {
+      data: {
+        name: 'Bad Penguin',
+        username: 'badpenguinness',
+        password: 'badpingu',
+      },
+    });
     await page.goto('/');
   });
 
@@ -80,6 +87,17 @@ describe('Blog app', () => {
         await page.getByRole('button', { name: 'remove' }).click();
         await expect(
           page.getByText('Playwright Blog - Mr. Playwright')
+        ).not.toBeVisible();
+      });
+
+      test(`a different user can't remove it`, async ({ page }) => {
+        await page.getByRole('button', { name: 'logout' }).click();
+
+        await loginWith(page, 'badpenguinness', 'badpingu');
+
+        await page.getByRole('button', { name: 'view' }).click();
+        await expect(
+          page.getByRole('button', { name: 'remove' })
         ).not.toBeVisible();
       });
     });
