@@ -100,6 +100,22 @@ describe('Blog app', () => {
           page.getByRole('button', { name: 'remove' })
         ).not.toBeVisible();
       });
+
+      test(`the blogs will be ranked by likes`, async ({ page }) => {
+        await createBlog(
+          page,
+          'Another Blog',
+          'Another Playwright',
+          'https://anotherblog.com'
+        );
+
+        await page.getByRole('button', { name: 'view' }).last().click();
+        await page.getByRole('button', { name: 'like' }).click();
+
+        const titles = await page.getByTestId('blog-title').allTextContents();
+        expect(titles[0]).toContain('Another Blog');
+        expect(titles[1]).toContain('Playwright Blog');
+      });
     });
   });
 });
