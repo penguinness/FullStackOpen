@@ -84,7 +84,7 @@ Note: Part 4's Notes project is a vastly extended version of Part 3's Notes proj
 
 ## Part 5: Testing React apps
 
-In Part 5, I integrated user administration and token authentication into the frontend of some applications, wrote unit tests for them, and wrote end-to-end tests using Cypress.
+In Part 5, I integrated user administration and token authentication into the frontend of some applications, wrote unit tests for them, and wrote end-to-end tests using Playwright.
 
 What I learned: Login on frontend (with token authentication), local storage, props.children, proptypes, useRef, forwardRef, useImperativeHandle, state lifting, frontend unit testing (vitest), render, screen, mock functions, end-to-end testing (Playwright).
 
