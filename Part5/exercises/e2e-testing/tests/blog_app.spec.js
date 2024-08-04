@@ -58,5 +58,22 @@ describe('Blog app', () => {
         page.getByText('Playwright Blog - Mr. Playwright')
       ).toBeVisible();
     });
+
+    describe('when a blog has been created', () => {
+      beforeEach(async ({ page }) => {
+        await createBlog(
+          page,
+          'Playwright Blog',
+          'Mr. Playwright',
+          'https://playwrightblog.com'
+        );
+      });
+
+      test('the blog can be liked', async ({ page }) => {
+        await page.getByRole('button', { name: 'view' }).click();
+        await page.getByRole('button', { name: 'like' }).click();
+        await expect(page.getByText('1 likes')).toBeVisible();
+      });
+    });
   });
 });
