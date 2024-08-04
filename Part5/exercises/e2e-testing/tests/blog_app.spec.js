@@ -23,4 +23,22 @@ describe('Blog app', () => {
     const locator = await page.getByRole('button', { name: 'login' });
     await expect(locator).toBeVisible();
   });
+
+  describe('Login', () => {
+    test('succeeds with correct credentials', async ({ page }) => {
+      await loginWith(page, 'penguinness', 'pingu');
+      await expect(page.getByText('Penguin logged in')).toBeVisible();
+    });
+
+    test('fails with wrong credentials', async ({ page }) => {
+      await loginWith(page, 'penguinness', 'wrong');
+
+      const errorDiv = await page.locator('.error');
+      await expect(errorDiv).toContainText('wrong username or password');
+      await expect(errorDiv).toHaveCSS('border-style', 'solid');
+      await expect(errorDiv).toHaveCSS('color', 'rgb(255, 0, 0)');
+
+      await expect(page.getByText('Penguin logged in')).not.toBeVisible();
+    });
+  });
 });
