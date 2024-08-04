@@ -41,4 +41,22 @@ describe('Blog app', () => {
       await expect(page.getByText('Penguin logged in')).not.toBeVisible();
     });
   });
+
+  describe('When logged in', () => {
+    beforeEach(async ({ page }) => {
+      await loginWith(page, 'penguinness', 'pingu');
+    });
+
+    test('a new blog can be created', async ({ page }) => {
+      await createBlog(
+        page,
+        'Playwright Blog',
+        'Mr. Playwright',
+        'https://playwrightblog.com'
+      );
+      await expect(
+        page.getByText('Playwright Blog - Mr. Playwright')
+      ).toBeVisible();
+    });
+  });
 });
