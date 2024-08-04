@@ -12,6 +12,8 @@ const BlogForm = ({ createBlog }) => {
     setNewTitle('');
     setNewAuthor('');
     setNewUrl('');
+
+    window.location.reload();
   };
 
   return (
