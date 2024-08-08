@@ -7,7 +7,8 @@ import {
 
 const AnecdoteList = () => {
   const anecdotes = useSelector((state) => {
-    if (state.filter === 'ALL') {
+    console.log(state);
+    if (state.filter === '') {
       return state.anecdotes;
     }
     return state.anecdotes.filter((anecdote) =>
