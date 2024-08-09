@@ -123,3 +123,5 @@ In Part 7, I created several front-end applications, integrated routing with Rea
 What I learned: React Router, custom hooks, React Bootstrap, Material UI, styled-components, Webpack.
 
 - [RoutedNotes](./Part7/lectures/routed-notes/)
+
+- [RoutedAnecdotes](./Part7/exercises/routed-anecdotes/)
