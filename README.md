@@ -95,3 +95,23 @@ Note: Part 5's Notes project is a vastly extended version of Part 4's Notes proj
 - [NotesBackend](./Part5/lectures/notes-backend/)
 
 - [BloglistFrontend](./Part5/exercises/bloglist-frontend/)
+
+## Part 6: Testing React apps
+
+In Part 6, I created several front-end applications using Redux, React Query, and the Context API, and made them communicate with json-servers.
+
+What I learned: Redux, Redux Toolkit, Redux Thunk, React Query, Context API (useReducer, createContext, useContext).
+
+- [ReduxCounter](./Part6/lectures/redux-counter/)
+
+- [ReduxUnicafe](./Part6/exercises/redux-unicafe/)
+
+- [ReduxNotes](./Part6/lectures/redux-notes/)
+
+- [ReduxAnecdotes](./Part6/exercises/redux-anecdotes/)
+
+- [QueryNotes](./Part6/lectures/query-notes/)
+
+- [QueryAnecdotes](./Part6/exercises/query-anecdotes/)
+
+- [HookCounter](./Part6/lectures/hook-counter/)
