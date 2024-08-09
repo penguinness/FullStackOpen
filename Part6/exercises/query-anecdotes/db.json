@@ -3,7 +3,7 @@
     {
       "content": "If it hurts, do it more often",
       "id": "47145",
-      "votes": 0
+      "votes": 9
     },
     {
       "content": "Adding manpower to a late software project makes it later!",
@@ -32,8 +32,13 @@
     },
     {
       "content": "React Query is hard.",
-      "votes": 3,
+      "votes": 0,
       "id": "d8Zpt12"
+    },
+    {
+      "content": "Context is easy.",
+      "votes": 0,
+      "id": "7FTcip3"
     }
   ]
 }

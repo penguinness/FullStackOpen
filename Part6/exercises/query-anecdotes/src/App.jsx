@@ -5,13 +5,29 @@ import { getAnecdotes, updateAnecdote } from './requests';
 import AnecdoteForm from './components/AnecdoteForm';
 import Notification from './components/Notification';
 
+import { useNotificationDispatch } from './NotificationContext';
+
 const App = () => {
   const queryClient = useQueryClient();
+  const dispatch = useNotificationDispatch();
 
   const updateAnecdoteMutation = useMutation({
     mutationFn: updateAnecdote,
-    onSuccess: () => {
+    onSuccess: (votedAnecdote) => {
       queryClient.invalidateQueries('anecdotes');
+      dispatch({
+        type: 'SHOW',
+        payload: `anecdote '${votedAnecdote.content}' voted`,
+      });
+      setTimeout(() => {
+        dispatch({ type: 'HIDE' });
+      }, 5000);
+    },
+    onError: (error) => {
+      dispatch({ type: 'SHOW', payload: `${error.response.data.error}` });
+      setTimeout(() => {
+        dispatch({ type: 'HIDE' });
+      }, 5000);
     },
   });
 
