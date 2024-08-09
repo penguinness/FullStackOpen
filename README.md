@@ -121,3 +121,5 @@ What I learned: Redux, Redux Toolkit, Redux Thunk, React Query, Context API (use
 In Part 7, I created several front-end applications, integrated routing with React Router.
 
 What I learned: React Router, custom hooks, React Bootstrap, Material UI, styled-components, Webpack.
+
+- [RoutedNotes](./Part7/lectures/routed-notes/)
