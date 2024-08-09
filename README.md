@@ -96,7 +96,7 @@ Note: Part 5's Notes project is a vastly extended version of Part 4's Notes proj
 
 - [BloglistFrontend](./Part5/exercises/bloglist-frontend/)
 
-## Part 6: Testing React apps
+## Part 6: Advanced state management
 
 In Part 6, I created several front-end applications using Redux, React Query, and the Context API, and made them communicate with json-servers.
 
@@ -115,3 +115,9 @@ What I learned: Redux, Redux Toolkit, Redux Thunk, React Query, Context API (use
 - [QueryAnecdotes](./Part6/exercises/query-anecdotes/)
 
 - [HookCounter](./Part6/lectures/hook-counter/)
+
+## Part 7: React router, custom hooks, styling app with CSS and webpack
+
+In Part 7, I created several front-end applications.
+
+What I learned: React Router, custom hooks, React Bootstrap, Material UI, styled-components, Webpack.
