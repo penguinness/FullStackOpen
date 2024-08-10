@@ -124,4 +124,10 @@ What I learned: React Router, custom hooks, React Bootstrap, Material UI, styled
 
 - [RoutedNotes](./Part7/lectures/routed-notes/)
 
+- [CustomCounter](./Part7/lectures/custom-counter/)
+
+- [CustomLeftRight](./Part7/lectures/custom-leftright/)
+
+- [CustomInfo](./Part7/lectures/custom-info/)
+
 - [RoutedAnecdotes](./Part7/exercises/routed-anecdotes/)
