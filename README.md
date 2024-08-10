@@ -131,3 +131,7 @@ What I learned: React Router, custom hooks, React Bootstrap, Material UI, styled
 - [CustomInfo](./Part7/lectures/custom-info/)
 
 - [RoutedAnecdotes](./Part7/exercises/routed-anecdotes/)
+
+- [CountryHook](./Part7/exercises/country-hook/)
+
+- [UltimateHooks](./Part7/exercises/ultimate-hooks/)
