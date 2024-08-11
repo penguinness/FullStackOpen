@@ -118,7 +118,7 @@ What I learned: Redux, Redux Toolkit, Redux Thunk, React Query, Context API (use
 
 ## Part 7: React router, custom hooks, styling app with CSS and webpack
 
-In Part 7, I created several front-end applications, integrated routing with React Router, created custom hooks.
+In Part 7, I created several front-end applications, integrated routing with React Router, created custom hooks, integrated Redux and React Query to two frontend applications and styled them with Material UI. I also practiced manually bundling a simple app with Webpack.
 
 What I learned: React Router, custom hooks, React Bootstrap, Material UI, styled-components, Webpack.
 
@@ -133,5 +133,7 @@ What I learned: React Router, custom hooks, React Bootstrap, Material UI, styled
 - [RoutedAnecdotes](./Part7/exercises/routed-anecdotes/)
 
 - [CountryHook](./Part7/exercises/country-hook/)
+
+- [WebpackApp](./Part7/lectures/webpack-app/)
 
 - [UltimateHooks](./Part7/exercises/ultimate-hooks/)
