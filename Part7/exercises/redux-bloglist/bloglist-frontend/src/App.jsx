@@ -6,17 +6,22 @@ import Notification from './components/Notification';
 import LoginForm from './components/LoginForm';
 import BlogForm from './components/BlogForm';
 import Togglable from './components/Togglable';
+import { useDispatch } from 'react-redux';
+import {
+  setNotification,
+  clearNotification,
+} from './reducers/notificationReducer';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
-  const [message, setMessage] = useState(null);
-  const [messageType, setMessageType] = useState(null);
   const [loginVisible, setLoginVisible] = useState(false);
 
   const blogFormRef = useRef();
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -45,10 +50,14 @@ const App = () => {
       setUsername('');
       setPassword('');
     } catch (exception) {
-      setMessage('wrong username or password');
-      setMessageType('error');
+      dispatch(
+        setNotification({
+          message: 'wrong username or password',
+          type: 'error',
+        })
+      );
       setTimeout(() => {
-        setMessage(null);
+        dispatch(clearNotification());
       }, 5000);
     }
   };
@@ -58,15 +67,23 @@ const App = () => {
     try {
       const createdBlog = await blogService.create(blogObject);
       setBlogs(blogs.concat(createdBlog));
-      setMessage(
-        `a new blog ${createdBlog.title} by ${createdBlog.author} added`
+      dispatch(
+        setNotification({
+          message: `a new blog ${createdBlog.title} by ${createdBlog.author} added`,
+          type: 'add-blog',
+        })
       );
-      setMessageType('add-blog');
-      setTimeout(() => setMessage(null), 5000);
+      setTimeout(() => {
+        dispatch(clearNotification());
+      }, 5000);
     } catch (error) {
-      setMessage(error.response.data.error);
-      setMessageType('error');
-      setTimeout(() => setMessage(null), 5000);
+      dispatch(
+        setNotification({
+          message: error.response.data.error,
+          type: 'error',
+        })
+      );
+      setTimeout(() => dispatch(clearNotification()), 5000);
     }
   };
 
@@ -77,9 +94,13 @@ const App = () => {
         blogs.map((blog) => (blog.id === blogObject.id ? blogObject : blog))
       );
     } catch (error) {
-      setMessage(error.response.data.error);
-      setMessageType('error');
-      setTimeout(() => setMessage(null), 5000);
+      dispatch(
+        setNotification({
+          message: error.response.data.error,
+          type: 'error',
+        })
+      );
+      setTimeout(() => dispatch(clearNotification()), 5000);
     }
   };
 
@@ -88,9 +109,13 @@ const App = () => {
       await blogService.remove(id);
       setBlogs((blogs) => blogs.filter((blog) => blog.id !== id));
     } catch (error) {
-      setMessage(error.response.data.error);
-      setMessageType('error');
-      setTimeout(() => setMessage(null), 5000);
+      dispatch(
+        setNotification({
+          message: error.response.data.error,
+          type: 'error',
+        })
+      );
+      setTimeout(() => dispatch(clearNotification()), 5000);
     }
   };
 
@@ -132,7 +157,7 @@ const App = () => {
   return (
     <div>
       <h2>Blogs</h2>
-      <Notification message={message} className={messageType} />
+      <Notification />
       {user === null ? (
         loginForm()
       ) : (
