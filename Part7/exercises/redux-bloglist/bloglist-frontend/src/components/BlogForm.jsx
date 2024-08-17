@@ -5,15 +5,21 @@ const BlogForm = ({ createBlog }) => {
   const [newAuthor, setNewAuthor] = useState('');
   const [newUrl, setNewUrl] = useState('');
 
-  const addBlog = (event) => {
+  const addBlog = async (event) => {
     event.preventDefault();
-    createBlog({ title: newTitle, author: newAuthor, url: newUrl });
+    const newBlog = await createBlog({
+      title: newTitle,
+      author: newAuthor,
+      url: newUrl,
+    });
+
+    console.log('newTitle is', newTitle);
+    console.log('newAuthor is', newAuthor);
+    console.log('newBlog is', newBlog);
 
     setNewTitle('');
     setNewAuthor('');
     setNewUrl('');
-
-    window.location.reload();
   };
 
   return (
