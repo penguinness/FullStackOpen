@@ -17,9 +17,12 @@ import {
   setNotification,
   clearNotification,
 } from './reducers/notificationReducer';
+import { setUser, clearUser } from './reducers/userReducer';
 
 const App = () => {
   const blogs = useSelector((state) => state.blogs);
+
+  const user = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 
@@ -27,7 +30,6 @@ const App = () => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [user, setUser] = useState(null);
   const [loginVisible, setLoginVisible] = useState(false);
 
   useEffect(() => {
@@ -38,7 +40,7 @@ const App = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser');
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
-      setUser(user);
+      dispatch(setUser(user));
       blogService.setToken(user.token);
     }
   }, []);
@@ -53,7 +55,7 @@ const App = () => {
       });
       window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(user));
       blogService.setToken(user.token);
-      setUser(user);
+      dispatch(setUser(user));
       setUsername('');
       setPassword('');
     } catch (exception) {
@@ -124,6 +126,7 @@ const App = () => {
   const handleLogout = async (event) => {
     event.preventDefault();
     window.localStorage.clear();
+    dispatch(clearUser());
     window.location.reload();
   };
 
