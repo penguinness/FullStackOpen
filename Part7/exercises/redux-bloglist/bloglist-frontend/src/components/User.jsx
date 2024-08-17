@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { initializeUsers } from '../reducers/usersReducer';
 import { useEffect } from 'react';
 import { Typography, List, ListItem, Paper } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const User = () => {
   const users = useSelector((state) => state.users);
@@ -37,7 +38,9 @@ const User = () => {
         ) : (
           user.blogs.map((blog) => (
             <ListItem key={blog.id}>
-              <Typography variant='body2'>{blog.title}</Typography>
+              <Typography variant='body2'>
+                <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+              </Typography>
             </ListItem>
           ))
         )}
