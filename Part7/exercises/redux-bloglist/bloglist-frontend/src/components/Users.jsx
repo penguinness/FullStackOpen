@@ -14,7 +14,6 @@ import {
   Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import User from './User';
 
 const Users = () => {
   const dispatch = useDispatch();
@@ -51,7 +50,9 @@ const Users = () => {
                   ) : (
                     <List>
                       {user.blogs.map((blog) => (
-                        <ListItem key={blog.id}>{blog.title}</ListItem>
+                        <ListItem key={blog.id}>
+                          <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+                        </ListItem>
                       ))}
                     </List>
                   )}

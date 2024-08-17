@@ -1,51 +1,61 @@
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { likeBlog } from '../reducers/blogReducer';
+import {
+  setNotification,
+  clearNotification,
+} from '../reducers/notificationReducer';
+import { Paper, Typography, Button } from '@mui/material';
 
-const Blog = ({ blog, updateBlog, removeBlog, user }) => {
-  const [visible, setVisible] = useState(false);
+const Blog = () => {
+  const blogs = useSelector((state) => state.blogs);
+  const id = useParams().id;
+  const blog = blogs.find((b) => b.id === String(id));
+  const dispatch = useDispatch();
 
-  const toggleVisibility = () => {
-    setVisible(!visible);
-  };
+  console.log('blogs at Blog.jsx:', blogs);
 
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5,
-  };
+  if (!blog) {
+    return null;
+  }
 
   const handleLike = () => {
-    updateBlog(blog);
-  };
-
-  const handleRemove = () => {
-    removeBlog(blog.id);
+    try {
+      dispatch(likeBlog(blog));
+    } catch (error) {
+      dispatch(
+        setNotification({
+          message: error.response.data.error,
+          type: 'error',
+        })
+      );
+      setTimeout(() => dispatch(clearNotification()), 5000);
+    }
   };
 
   return (
-    <div style={blogStyle}>
-      <div>
-        <span className='blog-title' data-testid='blog-title'>
-          {blog.title}
-        </span>
-        {' - '}
-        <span className='blog-author'>{blog.author}</span>
-        <br />
-        <button onClick={toggleVisibility}>{visible ? 'hide' : 'view'}</button>
-      </div>
-      {visible && (
-        <div>
-          <span className='blog-url'>{blog.url}</span> <br />
-          <span className='blog-likes'>{blog.likes} likes</span>{' '}
-          <button onClick={handleLike}>like</button> <br />
-          <span className='blog-user-name'>{blog.user.name}</span> <br />
-          {user && user.username === blog.user.username && (
-            <button onClick={handleRemove}>remove</button>
-          )}
-        </div>
-      )}
-    </div>
+    <Paper style={{ padding: '10px', marginTop: '10px' }}>
+      <Typography variant='h5' gutterBottom data-testid='blog-title'>
+        {blog.title}
+      </Typography>
+      <Typography variant='subtitle1' color='textSecondary'>
+        {blog.author}
+      </Typography>
+      <Typography variant='body1' color='textPrimary'>
+        <a href={blog.url} target='_blank' rel='noopener noreferrer'>
+          {blog.url}
+        </a>
+      </Typography>
+      <Typography variant='body1' color='textPrimary'>
+        {blog.likes}
+      </Typography>
+      <Button variant='contained' onClick={handleLike}>
+        Like
+      </Button>
+      <Typography variant='body2' color='textSecondary'>
+        {blog.user.name}
+      </Typography>
+    </Paper>
   );
 };
 

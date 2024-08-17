@@ -8,24 +8,18 @@ import BlogForm from './components/BlogForm';
 import Togglable from './components/Togglable';
 import Users from './components/Users';
 import User from './components/User';
+import Blogs from './components/Blogs';
 import { Routes, Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  initializeBlogs,
-  createBlog,
-  likeBlog,
-  deleteBlog,
-} from './reducers/blogReducer';
+import { initializeBlogs, createBlog } from './reducers/blogReducer';
 import {
   setNotification,
   clearNotification,
 } from './reducers/notificationReducer';
-import { setUser, clearUser } from './reducers/userReducer';
+import { setUser } from './reducers/userReducer';
 import { Container } from '@mui/material';
 
 const App = () => {
-  const blogs = useSelector((state) => state.blogs);
-
   const user = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
@@ -103,34 +97,6 @@ const App = () => {
     }
   };
 
-  const updateBlog = async (blogObject) => {
-    try {
-      dispatch(likeBlog(blogObject));
-    } catch (error) {
-      dispatch(
-        setNotification({
-          message: error.response.data.error,
-          type: 'error',
-        })
-      );
-      setTimeout(() => dispatch(clearNotification()), 5000);
-    }
-  };
-
-  const removeBlog = async (id) => {
-    try {
-      dispatch(deleteBlog(id));
-    } catch (error) {
-      dispatch(
-        setNotification({
-          message: error.response.data.error,
-          type: 'error',
-        })
-      );
-      setTimeout(() => dispatch(clearNotification()), 5000);
-    }
-  };
-
   const handleLogout = async (event) => {
     event.preventDefault();
     window.localStorage.clear();
@@ -140,8 +106,6 @@ const App = () => {
   const LogoutButton = () => {
     return <button onClick={handleLogout}>logout</button>;
   };
-
-  const sortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes);
 
   const loginForm = () => {
     const hideWhenVisible = { display: loginVisible ? 'none' : '' };
@@ -180,8 +144,8 @@ const App = () => {
                   loginForm()
                 ) : (
                   <div>
-                    <Link style={padding} to='/'>
-                      home
+                    <Link style={padding} to='/blogs'>
+                      blogs
                     </Link>
                     <Link style={padding} to='/users'>
                       users
@@ -192,21 +156,15 @@ const App = () => {
                     <Togglable buttonLabel='new blog' ref={blogFormRef}>
                       <BlogForm createBlog={addBlog} />
                     </Togglable>
-                    {sortedBlogs.map((blog) => (
-                      <Blog
-                        key={blog.id}
-                        blog={blog}
-                        updateBlog={updateBlog}
-                        removeBlog={removeBlog}
-                        user={user}
-                      />
-                    ))}
+                    <Blogs />
                   </div>
                 )
               }
             />
             <Route path='/users' element={<Users />} />
             <Route path='/users/:id' element={<User />} />
+            <Route path='/blogs' element={<Blogs />} />
+            <Route path='/blogs/:id' element={<Blog />} />
           </Routes>
         </div>
       </Router>
