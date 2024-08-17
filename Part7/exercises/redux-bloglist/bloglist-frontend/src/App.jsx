@@ -7,6 +7,7 @@ import LoginForm from './components/LoginForm';
 import BlogForm from './components/BlogForm';
 import Togglable from './components/Togglable';
 import Users from './components/Users';
+import User from './components/User';
 import { Routes, Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -20,6 +21,7 @@ import {
   clearNotification,
 } from './reducers/notificationReducer';
 import { setUser, clearUser } from './reducers/userReducer';
+import { Container } from '@mui/material';
 
 const App = () => {
   const blogs = useSelector((state) => state.blogs);
@@ -132,7 +134,6 @@ const App = () => {
   const handleLogout = async (event) => {
     event.preventDefault();
     window.localStorage.clear();
-    dispatch(clearUser());
     window.location.reload();
   };
 
@@ -166,47 +167,50 @@ const App = () => {
   };
 
   return (
-    <Router>
-      <div>
-        <h2>Blogs</h2>
-        <Notification />
-        <Routes>
-          <Route
-            path='/'
-            element={
-              user === null ? (
-                loginForm()
-              ) : (
-                <div>
-                  <Link style={padding} to='/'>
-                    home
-                  </Link>
-                  <Link style={padding} to='/users'>
-                    users
-                  </Link>
-                  <p>
-                    {user.name} logged in <LogoutButton />
-                  </p>
-                  <Togglable buttonLabel='new blog' ref={blogFormRef}>
-                    <BlogForm createBlog={addBlog} />
-                  </Togglable>
-                  {sortedBlogs.map((blog) => (
-                    <Blog
-                      key={blog.id}
-                      blog={blog}
-                      updateBlog={updateBlog}
-                      removeBlog={removeBlog}
-                      user={user}
-                    />
-                  ))}
-                </div>
-              )
-            }
-          />
-          <Route path='/users' element={<Users />} />
-        </Routes>
-      </div>
-    </Router>
+    <Container>
+      <Router>
+        <div>
+          <h2>Blogs</h2>
+          <Notification />
+          <Routes>
+            <Route
+              path='/'
+              element={
+                user === null ? (
+                  loginForm()
+                ) : (
+                  <div>
+                    <Link style={padding} to='/'>
+                      home
+                    </Link>
+                    <Link style={padding} to='/users'>
+                      users
+                    </Link>
+                    <p>
+                      {user.name} logged in <LogoutButton />
+                    </p>
+                    <Togglable buttonLabel='new blog' ref={blogFormRef}>
+                      <BlogForm createBlog={addBlog} />
+                    </Togglable>
+                    {sortedBlogs.map((blog) => (
+                      <Blog
+                        key={blog.id}
+                        blog={blog}
+                        updateBlog={updateBlog}
+                        removeBlog={removeBlog}
+                        user={user}
+                      />
+                    ))}
+                  </div>
+                )
+              }
+            />
+            <Route path='/users' element={<Users />} />
+            <Route path='/users/:id' element={<User />} />
+          </Routes>
+        </div>
+      </Router>
+    </Container>
   );
 };
 

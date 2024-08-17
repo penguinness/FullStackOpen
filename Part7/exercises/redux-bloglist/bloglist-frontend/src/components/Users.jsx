@@ -13,6 +13,8 @@ import {
   ListItem,
   Typography,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
+import User from './User';
 
 const Users = () => {
   const dispatch = useDispatch();
@@ -24,7 +26,7 @@ const Users = () => {
 
   return (
     <div>
-      <Typography variant='h4' gutterBottom sx={{ fontFamily: 'initial' }}>
+      <Typography variant='h5' gutterBottom sx={{ fontFamily: 'initial' }}>
         Users
       </Typography>
       <TableContainer component={Paper}>
@@ -38,7 +40,9 @@ const Users = () => {
           <TableBody>
             {users.map((user) => (
               <TableRow key={user.id}>
-                <TableCell>{user.username}</TableCell>
+                <TableCell>
+                  <Link to={`/users/${user.id}`}>{user.username}</Link>
+                </TableCell>
                 <TableCell>
                   {user.blogs.length === 0 ? (
                     <Typography variant='body2' color='textSecondary'>
