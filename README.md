@@ -137,3 +137,5 @@ What I learned: React Router, custom hooks, React Bootstrap, Material UI, styled
 - [WebpackApp](./Part7/lectures/webpack-app/)
 
 - [UltimateHooks](./Part7/exercises/ultimate-hooks/)
+
+- [ReduxBloglist](./Part7/exercises/redux-bloglist/)
