@@ -12,6 +12,9 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^5.16.7",
     "@reduxjs/toolkit": "^2.2.7",
     "axios": "^1.4.0",
     "prop-types": "^15.8.1",

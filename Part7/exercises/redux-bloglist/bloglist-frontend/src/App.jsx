@@ -6,6 +6,8 @@ import Notification from './components/Notification';
 import LoginForm from './components/LoginForm';
 import BlogForm from './components/BlogForm';
 import Togglable from './components/Togglable';
+import Users from './components/Users';
+import { Routes, Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   initializeBlogs,
@@ -31,6 +33,10 @@ const App = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loginVisible, setLoginVisible] = useState(false);
+
+  const padding = {
+    padding: 5,
+  };
 
   useEffect(() => {
     dispatch(initializeBlogs());
@@ -160,31 +166,47 @@ const App = () => {
   };
 
   return (
-    <div>
-      <h2>Blogs</h2>
-      <Notification />
-      {user === null ? (
-        loginForm()
-      ) : (
-        <div>
-          <p>
-            {user.name} logged in <LogoutButton />
-          </p>
-          <Togglable buttonLabel='new blog' ref={blogFormRef}>
-            <BlogForm createBlog={addBlog} />
-          </Togglable>
-          {sortedBlogs.map((blog) => (
-            <Blog
-              key={blog.id}
-              blog={blog}
-              updateBlog={updateBlog}
-              removeBlog={removeBlog}
-              user={user}
-            />
-          ))}
-        </div>
-      )}
-    </div>
+    <Router>
+      <div>
+        <h2>Blogs</h2>
+        <Notification />
+        <Routes>
+          <Route
+            path='/'
+            element={
+              user === null ? (
+                loginForm()
+              ) : (
+                <div>
+                  <Link style={padding} to='/'>
+                    home
+                  </Link>
+                  <Link style={padding} to='/users'>
+                    users
+                  </Link>
+                  <p>
+                    {user.name} logged in <LogoutButton />
+                  </p>
+                  <Togglable buttonLabel='new blog' ref={blogFormRef}>
+                    <BlogForm createBlog={addBlog} />
+                  </Togglable>
+                  {sortedBlogs.map((blog) => (
+                    <Blog
+                      key={blog.id}
+                      blog={blog}
+                      updateBlog={updateBlog}
+                      removeBlog={removeBlog}
+                      user={user}
+                    />
+                  ))}
+                </div>
+              )
+            }
+          />
+          <Route path='/users' element={<Users />} />
+        </Routes>
+      </div>
+    </Router>
   );
 };
 
