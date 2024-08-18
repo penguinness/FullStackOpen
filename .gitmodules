@@ -1,0 +1,3 @@
+[submodule "Part8"]
+	path = Part8
+	url = https://github.com/penguinness/FullStackOpen-GraphQL.git
