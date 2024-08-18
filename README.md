@@ -122,6 +122,8 @@ In Part 7, I created several front-end applications, integrated routing with Rea
 
 What I learned: React Router, custom hooks, React Bootstrap, Material UI, styled-components, Webpack.
 
+Note: ReduxBloglist is the most advanced project I've worked on so far. It builds on the bloglist project from Part 5 by incorporating advanced state management with Redux, adding a comments feature, and utilizing Material UI for styling.
+
 - [RoutedNotes](./Part7/lectures/routed-notes/)
 
 - [CustomCounter](./Part7/lectures/custom-counter/)

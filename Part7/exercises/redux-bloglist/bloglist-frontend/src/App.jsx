@@ -17,7 +17,14 @@ import {
   clearNotification,
 } from './reducers/notificationReducer';
 import { setUser } from './reducers/userReducer';
-import { Container } from '@mui/material';
+import {
+  Container,
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Box,
+} from '@mui/material';
 
 const App = () => {
   const user = useSelector((state) => state.user);
@@ -103,20 +110,16 @@ const App = () => {
     window.location.reload();
   };
 
-  const LogoutButton = () => {
-    return <button onClick={handleLogout}>logout</button>;
-  };
+  const LogoutButton = () => (
+    <Button variant='outlined' color='inherit' onClick={handleLogout}>
+      logout
+    </Button>
+  );
 
-  const loginForm = () => {
-    const hideWhenVisible = { display: loginVisible ? 'none' : '' };
-    const showWhenVisible = { display: loginVisible ? '' : 'none' };
-
-    return (
-      <div>
-        <div style={hideWhenVisible}>
-          <button onClick={() => setLoginVisible(true)}>login</button>
-        </div>
-        <div style={showWhenVisible}>
+  const loginForm = () => (
+    <Box display='flex' flexDirection='column' alignItems='center'>
+      {loginVisible ? (
+        <>
           <LoginForm
             username={username}
             password={password}
@@ -124,11 +127,21 @@ const App = () => {
             handlePasswordChange={({ target }) => setPassword(target.value)}
             handleSubmit={handleLogin}
           />
-          <button onClick={() => setLoginVisible(false)}>cancel</button>
-        </div>
-      </div>
-    );
-  };
+          <Button variant='outlined' onClick={() => setLoginVisible(false)}>
+            Cancel
+          </Button>
+        </>
+      ) : (
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={() => setLoginVisible(true)}
+        >
+          Login
+        </Button>
+      )}
+    </Box>
+  );
 
   return (
     <Container>

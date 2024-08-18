@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { TextField, Button, Typography, Box } from '@mui/material';
 
 const BlogForm = ({ createBlog }) => {
   const [newTitle, setNewTitle] = useState('');
@@ -23,40 +24,38 @@ const BlogForm = ({ createBlog }) => {
   };
 
   return (
-    <div>
-      <h2>Create a new blog</h2>
-
-      <form onSubmit={addBlog}>
-        <div>
-          title:{' '}
-          <input
-            value={newTitle}
-            onChange={(event) => setNewTitle(event.target.value)}
-            className='title-input'
-            data-testid='title-input'
-          />
-        </div>
-        <div>
-          author:{' '}
-          <input
-            value={newAuthor}
-            onChange={(event) => setNewAuthor(event.target.value)}
-            className='author-input'
-            data-testid='author-input'
-          />
-        </div>
-        <div>
-          url:{' '}
-          <input
-            value={newUrl}
-            onChange={(event) => setNewUrl(event.target.value)}
-            className='url-input'
-            data-testid='url-input'
-          />
-        </div>
-        <button type='submit'>create</button>
-      </form>
-    </div>
+    <Box component='form' onSubmit={addBlog} sx={{ mt: 2 }}>
+      <Typography variant='h6' gutterBottom>
+        Create a new Blog
+      </Typography>
+      <TextField
+        label='Title'
+        value={newTitle}
+        onChange={(event) => setNewTitle(event.target.value)}
+        fullWidth
+        margin='normal'
+        data-testid='title-input'
+      />
+      <TextField
+        label='Author'
+        value={newAuthor}
+        onChange={(event) => setNewAuthor(event.target.value)}
+        fullWidth
+        margin='normal'
+        data-testid='author-input'
+      />
+      <TextField
+        label='URL'
+        value={newUrl}
+        onChange={(event) => setNewUrl(event.target.value)}
+        fullWidth
+        margin='normal'
+        data-testid='url-input'
+      />
+      <Button type='submit' variant='contained' color='primary' sx={{ mt: 2 }}>
+        Create
+      </Button>
+    </Box>
   );
 };
 

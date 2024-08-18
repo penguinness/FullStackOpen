@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { TextField, Button, Typography, Container, Box } from '@mui/material';
 
 const LoginForm = ({
   handleSubmit,
@@ -8,30 +9,52 @@ const LoginForm = ({
   password,
 }) => {
   return (
-    <div>
-      <h2>Log in to application</h2>
-
-      <form onSubmit={handleSubmit}>
-        <div>
-          username
-          <input
+    <Container component='main' maxWidth='xs'>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          textAlign: 'center',
+          mt: 8,
+        }}
+      >
+        <Typography variant='h5' gutterBottom>
+          Log in to application
+        </Typography>
+        <Box
+          component='form'
+          onSubmit={handleSubmit}
+          sx={{
+            mt: 1,
+            width: '100%',
+          }}
+        >
+          <TextField
+            label='Username'
+            variant='outlined'
+            fullWidth
+            margin='normal'
             value={username}
             onChange={handleUsernameChange}
             data-testid='username'
           />
-        </div>
-        <div>
-          password
-          <input
+          <TextField
+            label='Password'
             type='password'
+            variant='outlined'
+            fullWidth
+            margin='normal'
             value={password}
             onChange={handlePasswordChange}
             data-testid='password'
           />
-        </div>
-        <button type='submit'>login</button>
-      </form>
-    </div>
+          <Button type='submit' variant='contained'>
+            Login
+          </Button>
+        </Box>
+      </Box>
+    </Container>
   );
 };
 
